@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         roomList.add(new Room("투썸플레이스", "언제자냐", "3명"));
 
         //실제 json 파싱해서 이 부분에서 데이터 넣어주면 됨
+        //revised needed
 
         adapter = new RoomListAdapter(getApplicationContext(), roomList);
         listView.setAdapter(adapter);
