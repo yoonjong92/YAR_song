@@ -5,9 +5,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         //방만들기
         TextView registerButton = (TextView) findViewById(R.id.registerButton);
 
+        //setOnClickListener는 버튼 누르면 동작하고, intent로 실행하는 activity 바꿀 수 있는 듯.
         registerButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -61,5 +64,15 @@ public class MainActivity extends AppCompatActivity {
 
         adapter = new RoomListAdapter(getApplicationContext(), roomList);
         listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(
+                new AdapterView.OnItemClickListener(){
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int i, long id){
+                        String item = String.valueOf(parent.getItemAtPosition(i));
+                        Toast.makeText(MainActivity.this, item, Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
     }
 }

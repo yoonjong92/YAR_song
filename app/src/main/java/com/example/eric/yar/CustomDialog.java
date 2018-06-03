@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.gnoy.yar.R;
+
 public class CustomDialog extends Dialog implements View.OnClickListener{
     private static final int LAYOUT = R.layout.add_music;
 
