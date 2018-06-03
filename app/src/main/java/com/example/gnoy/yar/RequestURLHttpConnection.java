@@ -12,8 +12,14 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.json.simple.parser.JSONParser;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.ParseException;
+
+
 public class RequestURLHttpConnection {
-    public int request(String _url){
+    public String request(String _url){
 
         // HttpURLConnection 참조 변수.
         HttpURLConnection urlConn = null;
@@ -41,7 +47,7 @@ public class RequestURLHttpConnection {
             // [2-3]. 연결 요청 확인.
             // 실패 시 null을 리턴하고 메서드를 종료.
             if (urlConn.getResponseCode() != HttpURLConnection.HTTP_OK)
-                return 100;
+                return null;
 
             // [2-4]. 읽어온 결과물 리턴.
             // 요청한 URL의 출력물을 BufferedReader로 받는다.
@@ -49,46 +55,30 @@ public class RequestURLHttpConnection {
 
             InputStreamReader responseBodyReader = new InputStreamReader(responseBody, "UTF-8");
 
-            JsonReader jsonReader = new JsonReader(responseBodyReader);
-            int value = 0;
-            jsonReader.beginObject(); // Start processing the JSON object
-            while (jsonReader.hasNext()) { // Loop through all keys
-                String key = jsonReader.nextName(); // Fetch the next key
-                if (key.equals("Count")) { // Check if desired key
-                    // Fetch the value as a String
-                     value = jsonReader.nextInt();
+            JSONParser jsonParser = new JSONParser();
 
-                    // Do something with the value
-                    // ...
+            JSONObject jsonObject = (JSONObject)jsonParser.parse(responseBodyReader);
 
-                    break; // Break out of the loop
-                } else {
-                    jsonReader.skipValue(); // Skip values of other keys
-                }
-            }
-            //BufferedReader reader = new BufferedReader(new InputStreamReader(urlConn.getInputStream(), "UTF-8"));
-            /*
-            // 출력물의 라인과 그 합에 대한 변수.
-            String line;
-            String page = "";
+            JSONArray ItemsArray = (JSONArray) jsonObject.get("Items");
 
-            // 라인을 받아와 합친다.
-            while ((line = reader.readLine()) != null){
-                page += line;
-            }
-*/
+            JSONObject ItemObject = (JSONObject) ItemsArray.get(0);
+
+            String value= "" + ItemObject.get("password");
+
             return value;
 
         } catch (MalformedURLException e) { // for URL.
             e.printStackTrace();
         } catch (IOException e) { // for openConnection().
             e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
         } finally {
             if (urlConn != null)
                 urlConn.disconnect();
         }
 
-        return 99;
+        return null;
 
     }
 }

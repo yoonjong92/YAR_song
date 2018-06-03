@@ -110,11 +110,11 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(Void... params) {
 
-            int result; // 요청 결과를 저장할 변수.
+            String result; // 요청 결과를 저장할 변수.
             RequestURLHttpConnection requestHttpURLConnection = new RequestURLHttpConnection();
             result = requestHttpURLConnection.request(url); // 해당 URL로 부터 결과물을 얻어온다.
 
-            return ""+result;
+            return result;
         }
 
         @Override
