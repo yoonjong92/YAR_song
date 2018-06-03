@@ -1,6 +1,8 @@
 package com.example.gnoy.yar;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +13,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,9 +55,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 //execute task that receive room list from server
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setMessage("서버에서 room list를 받아오세요")
-                        .show();
+                //AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                //builder.setMessage("서버에서 room list를 받아오세요")
+                //       .show();
+
+
+                // URL 설정.
+                String url = "https://3jpiuxn3xl.execute-api.ap-northeast-2.amazonaws.com/yar/yar/room";
+
+                // AsyncTask를 통해 HttpURLConnection 수행.
+                NetworkTask networkTask = new NetworkTask(url, null);
+                networkTask.execute();
             }
         });
 
@@ -71,8 +90,39 @@ public class MainActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View view, int i, long id){
                         String item = String.valueOf(parent.getItemAtPosition(i));
                         Toast.makeText(MainActivity.this, item, Toast.LENGTH_SHORT).show();
+                        //방 id 넘긴다.
                     }
                 }
         );
     }
+
+    public class NetworkTask extends AsyncTask<Void, Void, String> {
+
+        private String url;
+        private ContentValues values;
+
+        public NetworkTask(String url, ContentValues values) {
+
+            this.url = url;
+            this.values = values;
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+
+            int result; // 요청 결과를 저장할 변수.
+            RequestURLHttpConnection requestHttpURLConnection = new RequestURLHttpConnection();
+            result = requestHttpURLConnection.request(url); // 해당 URL로 부터 결과물을 얻어온다.
+
+            return ""+result;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            String item = s;
+            Toast.makeText(MainActivity.this, item, Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }
