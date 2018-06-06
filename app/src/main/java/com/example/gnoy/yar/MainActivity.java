@@ -93,6 +93,12 @@ public class MainActivity extends AppCompatActivity {
                         //Toast.makeText(MainActivity.this, item, Toast.LENGTH_SHORT).show();
                         //방 id 넘긴다.
                         Intent musiclistIntent = new Intent(MainActivity.this, MusicList.class);
+                        String loc = roomList.get(i).roomLocation;
+                        String tit = roomList.get(i).roomTitle;
+
+                        musiclistIntent.putExtra("loc", loc);
+                        musiclistIntent.putExtra("tit", tit);
+
                         MainActivity.this.startActivity(musiclistIntent);
                     }
                 }

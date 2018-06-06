@@ -19,6 +19,14 @@ public class MusicList extends AppCompatActivity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_eric);
 
+        Intent refIntent = this.getIntent();
+
+        String loc = refIntent.getStringExtra("loc");
+        String tit = refIntent.getStringExtra("tit");
+
+        TextView Room_Name = (TextView) findViewById(R.id.selected_item_textview);
+        Room_Name.setText(loc);
+
         mlistview = (ListView)findViewById(R.id.listview);
 
         //데이터를 저장하게 되는 리스트
