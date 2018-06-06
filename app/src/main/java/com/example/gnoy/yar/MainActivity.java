@@ -1,8 +1,10 @@
 package com.example.gnoy.yar;
 
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,12 +28,14 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     //roomlist
     private ListView listView;
     private RoomListAdapter adapter;
     private List<Room> roomList;
+    String url;
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,50 +54,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //새로고침
-        Button refreshButton = (Button) findViewById(R.id.refreshButton);
-        refreshButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                //execute task that receive room list from server
-                //AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                //builder.setMessage("서버에서 room list를 받아오세요")
-                //       .show();
-
-
-                // URL 설정.
-                String url = "https://3jpiuxn3xl.execute-api.ap-northeast-2.amazonaws.com/yar/yar/room";
-
-                // AsyncTask를 통해 HttpURLConnection 수행.
-                NetworkTask networkTask = new NetworkTask(url, null);
-                networkTask.execute();
-            }
-        });
-
         listView = (ListView) findViewById(R.id.listView);
         roomList = new ArrayList<Room>();
 
-        roomList.add(new Room("카페 그랑", "챔스 토토", "20명"));
-        roomList.add(new Room("퀴즈노스", "지금은", "10명"));
-        roomList.add(new Room("라쿠치나", "새벽 12시", "11명"));
-        roomList.add(new Room("비비큐", "망했다", "22명"));
-        roomList.add(new Room("투썸플레이스", "언제자냐", "3명"));
+        url = "https://3jpiuxn3xl.execute-api.ap-northeast-2.amazonaws.com/yar/yar/room";
 
-        //실제 json 파싱해서 이 부분에서 데이터 넣어주면 됨
-        //revised needed
-
-        adapter = new RoomListAdapter(getApplicationContext(), roomList);
-        listView.setAdapter(adapter);
-
-
-        //String url = "https://3jpiuxn3xl.execute-api.ap-northeast-2.amazonaws.com/yar/yar/room";
-
+        roomList = new ArrayList<Room>();
         // AsyncTask를 통해 HttpURLConnection 수행.
-        //NetworkTask networkTask = new NetworkTask(url, null);
-        //networkTask.execute();
-        System.out.println("sasassf");
-
-        //roomList = new ArrayList<Room>();
+        NetworkTask networkTask = new NetworkTask(url, null);
+        networkTask.execute();
 
         listView = (ListView) findViewById(R.id.listView);
         adapter = new RoomListAdapter(getApplicationContext(), roomList);
@@ -119,7 +88,43 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_layout);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                MainActivity.NetworkTask networkTask = new MainActivity.NetworkTask(url, null);
+                networkTask.execute();
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
     }
+
+
+    public void onClick(View view){
+        View oParentView;
+        String position;
+        int p;
+        switch (view.getId()) {
+            case R.id.deleteR_button:
+                oParentView = (View)view.getParent();
+                position = (String) oParentView.getTag();
+                p = Integer.parseInt(position);
+                String ID = roomList.get(p).roomID;
+                CustomDialog dialog = new CustomDialog(this, ID);
+                dialog.show();
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        MainActivity.NetworkTask networkTask = new MainActivity.NetworkTask(url, null);
+                        networkTask.execute();
+                    }
+                });
+                break;
+        }
+    }
+
 
     public class NetworkTask extends AsyncTask<Void, Void, String> {
 
@@ -144,9 +149,12 @@ public class MainActivity extends AppCompatActivity {
             for (int i=0; i < ItemsArray.size(); i++){
                 JSONObject ItemObject = (JSONObject) ItemsArray.get(i);
                 String loc= "" + ItemObject.get("name");
-                String ID = "" + ItemObject.get("ID");
+                String ID = "" + ItemObject.get("room_id");
 
-                roomList.add(new Room(loc, "title","00명", ID));
+                Room tmpRoom = new Room(loc, "title", ID);
+                tmpRoom.DeleteClickListener = MainActivity.this;
+
+                roomList.add(tmpRoom);
             }
 
             return "asfaflk";
@@ -157,13 +165,16 @@ public class MainActivity extends AppCompatActivity {
             super.onPostExecute(s);
             String item = s;
 
-            runOnUiThread(new Runnable() {
+            MainActivity.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    adapter.notifyDataSetChanged();
+                    System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+                    listView = (ListView) findViewById(R.id.listView);
+                    adapter = new RoomListAdapter(getApplicationContext(), roomList);
+                    listView.setAdapter(adapter);
                 }
             });
-            Toast.makeText(MainActivity.this, item, Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "방 목록이 갱신되었습니다.", Toast.LENGTH_SHORT).show();
         }
     }
 

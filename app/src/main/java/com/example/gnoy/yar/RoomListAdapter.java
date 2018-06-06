@@ -37,14 +37,14 @@ public class RoomListAdapter extends BaseAdapter {
         View v = View.inflate(context, R.layout.room, null);
         TextView roomLocation = (TextView) v.findViewById(R.id.roomLocation);
         TextView roomTitle = (TextView) v.findViewById(R.id.roomTitle);
-        TextView roomHeadcount = (TextView) v.findViewById(R.id.roomHeadcount);
-        //Button delete = (Button) v.findViewById(R.id.DeleteButton);
 
         roomLocation.setText(roomList.get(position).getRoomLocation());
         roomTitle.setText(roomList.get(position).getRoomTitle());
-        roomHeadcount.setText(roomList.get(position).getRoomHeadcount());
 
-        v.setTag(roomList.get(position).getRoomLocation());
+        Button deleteButton = (Button) v.findViewById(R.id.deleteR_button);
+        deleteButton.setOnClickListener(roomList.get(position).DeleteClickListener);
+
+        v.setTag("" +  position);
         return v;
     }
 }

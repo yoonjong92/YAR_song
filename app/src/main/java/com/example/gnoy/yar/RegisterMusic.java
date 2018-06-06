@@ -48,12 +48,14 @@ import cz.msebera.android.httpclient.params.HttpParams;
 
 import static java.lang.Boolean.TRUE;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterMusic extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+
 
         //user input을 받아 변수에 저장
         final EditText locationText = (EditText) findViewById(R.id.locationText);
@@ -77,12 +79,12 @@ public class RegisterActivity extends AppCompatActivity {
                 values.put("roomTitle",titleText.getText().toString());
                 values.put("roomPassword",passwordText.getText().toString());
                 values.put("timestamp",Long.toString(System.currentTimeMillis()));
-                RegisterActivity.NetworkTask networkTask = new RegisterActivity.NetworkTask(url, values);
+                RegisterMusic.NetworkTask networkTask = new RegisterMusic.NetworkTask(url, values);
                 networkTask.execute();
             }
         });
-    }
 
+    }
     public class NetworkTask extends AsyncTask<Void, Void, String> {
 
         private String url;
@@ -134,7 +136,7 @@ public class RegisterActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            AlertDialog.Builder dialogbuilder = new AlertDialog.Builder(RegisterActivity.this);
+                            AlertDialog.Builder dialogbuilder = new AlertDialog.Builder(RegisterMusic.this);
                             dialogbuilder.setMessage("방 만들기에 성공했습니다.")
                                     .setNegativeButton("확인", null)
                                     .create()
@@ -146,7 +148,7 @@ public class RegisterActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            AlertDialog.Builder dialogbuilder = new AlertDialog.Builder(RegisterActivity.this);
+                            AlertDialog.Builder dialogbuilder = new AlertDialog.Builder(RegisterMusic.this);
                             dialogbuilder.setMessage("방 만들기에 실패했습니다.")
                                     .setNegativeButton("확인", null)
                                     .create()

@@ -1,10 +1,13 @@
 package com.example.gnoy.yar;
 
+import android.view.View;
+
 public class Room {
     String roomLocation;
     String roomTitle;
-    String roomHeadcount;
     String roomID;
+
+    public View.OnClickListener DeleteClickListener;
 
     public String getRoomLocation() {
         return roomLocation;
@@ -22,32 +25,22 @@ public class Room {
         this.roomTitle = roomTitle;
     }
 
-    public String getRoomHeadcount() {
-        return roomHeadcount;
-    }
-
-    public void setRoomHeadcount(String roomHeadcount) {
-        this.roomHeadcount = roomHeadcount;
-    }
-
     public String getRoomID() {
         return roomID;
     }
 
     public void setRoomID(String roomID) {
-        this.roomHeadcount = roomID;
+        this.roomID = roomID;
     }
 
-    public Room(String roomLocation, String roomTitle, String roomHeadcount) {
+    public Room(String roomLocation, String roomTitle) {
         this.roomLocation = roomLocation;
         this.roomTitle = roomTitle;
-        this.roomHeadcount = roomHeadcount;
     }
 
-    public Room(String roomLocation, String roomTitle, String roomHeadcount, String roomID) {
+    public Room(String roomLocation, String roomTitle, String roomID) {
         this.roomLocation = roomLocation;
         this.roomTitle = roomTitle;
-        this.roomHeadcount = roomHeadcount;
         this.roomID = roomID;
     }
 }

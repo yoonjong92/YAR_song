@@ -4,7 +4,13 @@
 padding은 내가 준듯. 하나의 list에서 어느 정도 여백을 주냐에 따라 결정 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_weight="1"
     android:orientation="vertical"
     android:paddingBottom="10dp"
     android:paddingLeft="5dp"
@@ -17,7 +23,7 @@ padding은 내가 준듯. 하나의 list에서 어느 정도 여백을 주냐에
         android:layout_height="wrap_content"
         android:text="장소"
         android:textColor="#00a7f5"
-        android:textSize="15dp" />
+        android:textSize="20dp" />
 
     <TextView
         android:id="@+id/roomTitle"
@@ -27,13 +33,14 @@ padding은 내가 준듯. 하나의 list에서 어느 정도 여백을 주냐에
         android:textColor="#00a7f5"
         android:textSize="15dp" />
 
-    <TextView
-        android:id="@+id/roomHeadcount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="인원"
-        android:textColor="#00a7f5"
-        android:textSize="15dp" />
+    </LinearLayout>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="0"
+        android:focusable ="false"
+        android:text="삭제"
+        android:id="@+id/deleteR_button"/>
 
 </LinearLayout>

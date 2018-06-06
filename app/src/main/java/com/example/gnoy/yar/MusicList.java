@@ -1,9 +1,11 @@
 package com.example.gnoy.yar;
 
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,9 +21,12 @@ import java.util.ArrayList;
 
 public class MusicList extends AppCompatActivity implements View.OnClickListener{
 
+    SwipeRefreshLayout mSwipeRefreshLayout;
     ListView mlistview;
     ArrayList<MusicDto> list;
     MyAdapter adapter;
+    String ID;
+    String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +36,7 @@ public class MusicList extends AppCompatActivity implements View.OnClickListener
         Intent refIntent = this.getIntent();
 
         String loc = refIntent.getStringExtra("loc");
-        String ID = refIntent.getStringExtra("ID");
+        ID = refIntent.getStringExtra("ID");
 
         TextView Room_Name = (TextView) findViewById(R.id.selected_item_textview);
         Room_Name.setText(loc);
@@ -40,6 +45,7 @@ public class MusicList extends AppCompatActivity implements View.OnClickListener
 
         //데이터를 저장하게 되는 리스트
         list = new ArrayList<>();
+        /*
         addMusicList("봄이 좋냐", "10cm");
         addMusicList("봄이 좋냐", "10cm");
         addMusicList("봄이 좋냐", "10cm");
@@ -52,29 +58,29 @@ public class MusicList extends AppCompatActivity implements View.OnClickListener
         addMusicList("봄이 좋냐", "10cm");
         addMusicList("봄이 좋냐", "10cm");
         addMusicList("봄이 좋냐", "10cm");
-
         addMusicList("뿜뿜", "모모랜드");
+        */
         //리스트뷰와 리스트를 연결하기 위해 사용되는 어댑터
+
+        url = "https://3jpiuxn3xl.execute-api.ap-northeast-2.amazonaws.com/yar/yar/song?room_id=" + ID;
+        MusicList.NetworkTask networkTask = new MusicList.NetworkTask(url, null);
+        networkTask.execute();
+
         MyAdapter adapter = new MyAdapter(this,list);
         mlistview.setAdapter(adapter);
 
-        //String url = "https://3jpiuxn3xl.execute-api.ap-northeast-2.amazonaws.com/yar/yar/song?room_id=" + ID;
-        //MusicList.NetworkTask networkTask = new MusicList.NetworkTask(url, null);
-        //networkTask.execute();
-
-        mlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView parent, View v, int position, long id) {
-                String message = list.get(position).getMessage();
-
-
-            }
-        }) ;
-
-
         Button submit_button = (Button)findViewById(R.id.submit_button);
-
         submit_button.setOnClickListener(this);
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_layout);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                MusicList.NetworkTask networkTask = new MusicList.NetworkTask(url, null);
+                networkTask.execute();
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
     }
 
@@ -84,11 +90,17 @@ public class MusicList extends AppCompatActivity implements View.OnClickListener
         int p;
         switch (view.getId()){
             case R.id.submit_button:
-                CustomDialog dialog = new CustomDialog(this);
+                CustomDialog dialog = new CustomDialog(this, ID);
                 dialog.show();
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        MusicList.NetworkTask networkTask = new MusicList.NetworkTask(url, null);
+                        networkTask.execute();
+                    }
+                });
                 break;
             case R.id.show_message:
-                System.out.println("qkjanscjkansfkjanmcnxc");
                 oParentView = (View)view.getParent();
                 position = (String) oParentView.getTag();
                 p = Integer.parseInt(position);
@@ -103,7 +115,6 @@ public class MusicList extends AppCompatActivity implements View.OnClickListener
 
                 break;
         }
-
     }
 
     public  void addMusicList(String Music_Title, String Music_Singer){
@@ -114,7 +125,7 @@ public class MusicList extends AppCompatActivity implements View.OnClickListener
         musicDto.setMessage("호롤로로로로로로로로로로롤");
         musicDto.MessageClickListener = MusicList.this;
         musicDto.DeleteClickListener = MusicList.this;
-        list.add(musicDto);
+        list.add(0, musicDto);
     }
 
     public class NetworkTask extends AsyncTask<Void, Void, String> {
@@ -165,10 +176,12 @@ public class MusicList extends AppCompatActivity implements View.OnClickListener
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    adapter.notifyDataSetChanged();
+                    mlistview = (ListView)findViewById(R.id.listview);
+                    MyAdapter adapter = new MyAdapter (MusicList.this,list);
+                    mlistview.setAdapter(adapter);
                 }
             });
-            Toast.makeText(MusicList.this, item, Toast.LENGTH_SHORT).show();
+            Toast.makeText(MusicList.this, "목록이 갱신되었습니다.", Toast.LENGTH_SHORT).show();
         }
     }
 }
