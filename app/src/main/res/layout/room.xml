@@ -35,10 +35,5 @@ padding은 내가 준듯. 하나의 list에서 어느 정도 여백을 주냐에
         android:textColor="#00a7f5"
         android:textSize="15dp" />
 
-    <Button
-        android:id="@+id/DeleteButton"
-        android:layout_width="125dp"
-        android:layout_height="wrap_content"
-        android:text="삭제" />
 
 </LinearLayout>

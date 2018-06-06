@@ -13,7 +13,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -84,6 +85,20 @@ public class MainActivity extends AppCompatActivity {
         adapter = new RoomListAdapter(getApplicationContext(), roomList);
         listView.setAdapter(adapter);
 
+
+        //String url = "https://3jpiuxn3xl.execute-api.ap-northeast-2.amazonaws.com/yar/yar/room";
+
+        // AsyncTask를 통해 HttpURLConnection 수행.
+        //NetworkTask networkTask = new NetworkTask(url, null);
+        //networkTask.execute();
+        System.out.println("sasassf");
+
+        //roomList = new ArrayList<Room>();
+
+        listView = (ListView) findViewById(R.id.listView);
+        adapter = new RoomListAdapter(getApplicationContext(), roomList);
+        listView.setAdapter(adapter);
+
         listView.setOnItemClickListener(
                 new AdapterView.OnItemClickListener(){
                     @Override
@@ -94,10 +109,10 @@ public class MainActivity extends AppCompatActivity {
                         //방 id 넘긴다.
                         Intent musiclistIntent = new Intent(MainActivity.this, MusicList.class);
                         String loc = roomList.get(i).roomLocation;
-                        String tit = roomList.get(i).roomTitle;
+                        String ID = roomList.get(i).roomID;
 
                         musiclistIntent.putExtra("loc", loc);
-                        musiclistIntent.putExtra("tit", tit);
+                        musiclistIntent.putExtra("ID", ID);
 
 
                         MainActivity.this.startActivity(musiclistIntent);
@@ -120,17 +135,34 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(Void... params) {
 
-            String result; // 요청 결과를 저장할 변수.
+            JSONArray ItemsArray; // 요청 결과를 저장할 변수.
             RequestURLHttpConnection requestHttpURLConnection = new RequestURLHttpConnection();
-            result = requestHttpURLConnection.request(url); // 해당 URL로 부터 결과물을 얻어온다.
+            ItemsArray = requestHttpURLConnection.request(url); // 해당 URL로 부터 결과물을 얻어온다.
+            System.out.println(ItemsArray.size());
+            roomList = new ArrayList<Room>();
 
-            return result;
+            for (int i=0; i < ItemsArray.size(); i++){
+                JSONObject ItemObject = (JSONObject) ItemsArray.get(i);
+                String loc= "" + ItemObject.get("name");
+                String ID = "" + ItemObject.get("ID");
+
+                roomList.add(new Room(loc, "title","00명", ID));
+            }
+
+            return "asfaflk";
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             String item = s;
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    adapter.notifyDataSetChanged();
+                }
+            });
             Toast.makeText(MainActivity.this, item, Toast.LENGTH_SHORT).show();
         }
     }

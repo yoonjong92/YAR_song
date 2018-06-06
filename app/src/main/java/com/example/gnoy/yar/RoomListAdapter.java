@@ -38,7 +38,7 @@ public class RoomListAdapter extends BaseAdapter {
         TextView roomLocation = (TextView) v.findViewById(R.id.roomLocation);
         TextView roomTitle = (TextView) v.findViewById(R.id.roomTitle);
         TextView roomHeadcount = (TextView) v.findViewById(R.id.roomHeadcount);
-        Button delete = (Button) v.findViewById(R.id.DeleteButton);
+        //Button delete = (Button) v.findViewById(R.id.DeleteButton);
 
         roomLocation.setText(roomList.get(position).getRoomLocation());
         roomTitle.setText(roomList.get(position).getRoomTitle());

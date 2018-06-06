@@ -55,10 +55,12 @@ public class MyAdapter extends BaseAdapter implements View.OnClickListener{
         artist.setText(list.get(position).getArtist());
 
         Button messageButton = (Button) convertView.findViewById(R.id.show_message);
-        messageButton.setOnClickListener(this);
+        messageButton.setOnClickListener(list.get(position).MessageClickListener);
 
         Button deleteButton = (Button) convertView.findViewById(R.id.delete_button);
-        deleteButton.setOnClickListener(this);
+        deleteButton.setOnClickListener(list.get(position).DeleteClickListener);
+
+        convertView.setTag(""+position);
 
         return convertView;
     }

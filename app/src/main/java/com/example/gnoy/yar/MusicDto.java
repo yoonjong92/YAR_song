@@ -1,22 +1,26 @@
 package com.example.gnoy.yar;
 
+import android.view.View;
+
 import java.io.Serializable;
 
 public class MusicDto implements Serializable {
     private String id;
-    private String albumId;
     private String title;
     private String artist;
     private String message;
 
+    public View.OnClickListener MessageClickListener;
+    public View.OnClickListener DeleteClickListener;
+
     public MusicDto() {
     }
 
-    public MusicDto(String id, String albumId, String title, String artist) {
+    public MusicDto(String id, String title, String artist, String message) {
         this.id = id;
-        this.albumId = albumId;
         this.title = title;
         this.artist = artist;
+        this.message = message;
     }
 
     public String getId() {
@@ -27,28 +31,8 @@ public class MusicDto implements Serializable {
         this.id = id;
     }
 
-    public String getAlbumId() {
-        return albumId;
-    }
-
-    public void setAlbumId(String albumId) {
-        this.albumId = albumId;
-    }
-
     public String getTitle() {
         return title;
-    }
-
-
-
-    @Override
-    public String toString() {
-        return "MusicDto{" +
-                "id='" + id + '\'' +
-                ", albumId='" + albumId + '\'' +
-                ", title='" + title + '\'' +
-                ", artist='" + artist + '\'' +
-                '}';
     }
 
     public void setTitle(String title) {

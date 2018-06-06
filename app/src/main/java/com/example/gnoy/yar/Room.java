@@ -4,6 +4,7 @@ public class Room {
     String roomLocation;
     String roomTitle;
     String roomHeadcount;
+    String roomID;
 
     public String getRoomLocation() {
         return roomLocation;
@@ -29,9 +30,24 @@ public class Room {
         this.roomHeadcount = roomHeadcount;
     }
 
+    public String getRoomID() {
+        return roomID;
+    }
+
+    public void setRoomID(String roomID) {
+        this.roomHeadcount = roomID;
+    }
+
     public Room(String roomLocation, String roomTitle, String roomHeadcount) {
         this.roomLocation = roomLocation;
         this.roomTitle = roomTitle;
         this.roomHeadcount = roomHeadcount;
+    }
+
+    public Room(String roomLocation, String roomTitle, String roomHeadcount, String roomID) {
+        this.roomLocation = roomLocation;
+        this.roomTitle = roomTitle;
+        this.roomHeadcount = roomHeadcount;
+        this.roomID = roomID;
     }
 }
