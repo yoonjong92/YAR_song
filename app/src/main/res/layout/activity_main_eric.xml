@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
 
-    tools:context="com.example.eric.yar.MainActivity">
+    tools:context="com.example.gnoy.yar.MusicList">
 
     <TextView
         android:id="@+id/selected_item_textview"

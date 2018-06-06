@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int i, long id){
                         String item = String.valueOf(parent.getItemAtPosition(i));
+                        System.out.println(item);
                         Toast.makeText(MainActivity.this, item, Toast.LENGTH_SHORT).show();
                         //방 id 넘긴다.
                     }
