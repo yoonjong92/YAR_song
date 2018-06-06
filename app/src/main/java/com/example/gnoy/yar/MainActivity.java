@@ -72,17 +72,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 new AdapterView.OnItemClickListener(){
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int i, long id){
-                        //String item = String.valueOf(parent.getItemAtPosition(i));
-                        //System.out.println(item);
-                        //Toast.makeText(MainActivity.this, item, Toast.LENGTH_SHORT).show();
-                        //방 id 넘긴다.
                         Intent musiclistIntent = new Intent(MainActivity.this, MusicList.class);
                         String loc = roomList.get(i).roomLocation;
                         String ID = roomList.get(i).roomID;
 
                         musiclistIntent.putExtra("loc", loc);
                         musiclistIntent.putExtra("ID", ID);
-
 
                         MainActivity.this.startActivity(musiclistIntent);
                     }
@@ -112,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 position = (String) oParentView.getTag();
                 p = Integer.parseInt(position);
                 String ID = roomList.get(p).roomID;
-                CustomDialog dialog = new CustomDialog(this, ID);
+                DeleteDialog dialog = new DeleteDialog(this, ID, true);
                 dialog.show();
                 dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
@@ -163,18 +158,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            String item = s;
 
             MainActivity.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
                     listView = (ListView) findViewById(R.id.listView);
                     adapter = new RoomListAdapter(getApplicationContext(), roomList);
                     listView.setAdapter(adapter);
                 }
             });
-            Toast.makeText(MainActivity.this, "방 목록이 갱신되었습니다.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "신청방 목록이 갱신되었습니다.", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -45,22 +45,6 @@ public class MusicList extends AppCompatActivity implements View.OnClickListener
 
         //데이터를 저장하게 되는 리스트
         list = new ArrayList<>();
-        /*
-        addMusicList("봄이 좋냐", "10cm");
-        addMusicList("봄이 좋냐", "10cm");
-        addMusicList("봄이 좋냐", "10cm");
-        addMusicList("봄이 좋냐", "10cm");
-        addMusicList("봄이 좋냐", "10cm");
-        addMusicList("봄이 좋냐", "10cm");
-        addMusicList("봄이 좋냐", "10cm");
-        addMusicList("봄이 좋냐", "10cm");
-        addMusicList("봄이 좋냐", "10cm");
-        addMusicList("봄이 좋냐", "10cm");
-        addMusicList("봄이 좋냐", "10cm");
-        addMusicList("봄이 좋냐", "10cm");
-        addMusicList("뿜뿜", "모모랜드");
-        */
-        //리스트뷰와 리스트를 연결하기 위해 사용되는 어댑터
 
         url = "https://3jpiuxn3xl.execute-api.ap-northeast-2.amazonaws.com/yar/yar/song?room_id=" + ID;
         MusicList.NetworkTask networkTask = new MusicList.NetworkTask(url, null);
@@ -112,20 +96,17 @@ public class MusicList extends AppCompatActivity implements View.OnClickListener
                 position = (String) oParentView.getTag();
                 p = Integer.parseInt(position);
                 String id = list.get(p).getId();
-
+                DeleteDialog dialogD = new DeleteDialog(this, ID, false);
+                dialogD.show();
+                dialogD.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        MusicList.NetworkTask networkTask = new MusicList.NetworkTask(url, null);
+                        networkTask.execute();
+                    }
+                });
                 break;
         }
-    }
-
-    public  void addMusicList(String Music_Title, String Music_Singer){
-
-        MusicDto musicDto = new MusicDto();
-        musicDto.setTitle(Music_Title);
-        musicDto.setArtist(Music_Singer);
-        musicDto.setMessage("호롤로로로로로로로로로로롤");
-        musicDto.MessageClickListener = MusicList.this;
-        musicDto.DeleteClickListener = MusicList.this;
-        list.add(0, musicDto);
     }
 
     public class NetworkTask extends AsyncTask<Void, Void, String> {
@@ -181,7 +162,7 @@ public class MusicList extends AppCompatActivity implements View.OnClickListener
                     mlistview.setAdapter(adapter);
                 }
             });
-            Toast.makeText(MusicList.this, "목록이 갱신되었습니다.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MusicList.this, "신청곡 목록이 갱신되었습니다.", Toast.LENGTH_SHORT).show();
         }
     }
 }
