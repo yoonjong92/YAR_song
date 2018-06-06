@@ -11,15 +11,15 @@ import java.util.ArrayList;
 
 public class MusicList extends AppCompatActivity implements View.OnClickListener{
 
-    ListView listview;
+    ListView mlistview;
     ArrayList<MusicDto> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_eric);
 
-        listview = (ListView)findViewById(R.id.listview);
+        mlistview = (ListView)findViewById(R.id.listview);
 
         //데이터를 저장하게 되는 리스트
         list = new ArrayList<>();
@@ -42,9 +42,9 @@ public class MusicList extends AppCompatActivity implements View.OnClickListener
 
 
         //리스트뷰의 어댑터를 지정해준다.
-        listview.setAdapter(adapter);
+        mlistview.setAdapter(adapter);
 
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
                 String message = list.get(position).getMessage();

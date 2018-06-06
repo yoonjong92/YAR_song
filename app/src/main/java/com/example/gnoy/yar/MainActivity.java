@@ -88,10 +88,12 @@ public class MainActivity extends AppCompatActivity {
                 new AdapterView.OnItemClickListener(){
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int i, long id){
-                        String item = String.valueOf(parent.getItemAtPosition(i));
-                        System.out.println(item);
-                        Toast.makeText(MainActivity.this, item, Toast.LENGTH_SHORT).show();
+                        //String item = String.valueOf(parent.getItemAtPosition(i));
+                        //System.out.println(item);
+                        //Toast.makeText(MainActivity.this, item, Toast.LENGTH_SHORT).show();
                         //방 id 넘긴다.
+                        Intent musiclistIntent = new Intent(MainActivity.this, MusicList.class);
+                        MainActivity.this.startActivity(musiclistIntent);
                     }
                 }
         );
