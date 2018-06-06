@@ -16,7 +16,6 @@
         android:layout_weight="0.1"
         android:background="#dadada"
         android:gravity="center_vertical"
-        android:text="카페 그랑 서울대학교점"
         android:padding="10dip"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 

@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
                         musiclistIntent.putExtra("loc", loc);
                         musiclistIntent.putExtra("tit", tit);
 
+
                         MainActivity.this.startActivity(musiclistIntent);
                     }
                 }
