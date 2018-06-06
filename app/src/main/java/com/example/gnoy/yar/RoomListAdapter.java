@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.List;
@@ -37,6 +38,7 @@ public class RoomListAdapter extends BaseAdapter {
         TextView roomLocation = (TextView) v.findViewById(R.id.roomLocation);
         TextView roomTitle = (TextView) v.findViewById(R.id.roomTitle);
         TextView roomHeadcount = (TextView) v.findViewById(R.id.roomHeadcount);
+        Button delete = (Button) v.findViewById(R.id.DeleteButton);
 
         roomLocation.setText(roomList.get(position).getRoomLocation());
         roomTitle.setText(roomList.get(position).getRoomTitle());

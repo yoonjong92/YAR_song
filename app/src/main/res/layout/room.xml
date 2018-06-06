@@ -2,33 +2,43 @@
 <!-- comment -->
 <!-- vertical은 세로로 list가 추가. 추가하는 내용은 textview로 add.
 padding은 내가 준듯. 하나의 list에서 어느 정도 여백을 주냐에 따라 결정 -->
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingTop="10dp"
     android:paddingBottom="10dp"
+    android:paddingLeft="5dp"
     android:paddingRight="5dp"
-    android:paddingLeft="5dp">
+    android:paddingTop="10dp">
+
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/roomLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="장소"
-        android:textSize="15dp"
-        android:textColor="#00a7f5"/>
+        android:textColor="#00a7f5"
+        android:textSize="15dp" />
+
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/roomTitle"
-        android:text="방 제목"
-        android:textSize="15dp"
-        android:textColor="#00a7f5"/>
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="방 제목"
+        android:textColor="#00a7f5"
+        android:textSize="15dp" />
+
+    <TextView
         android:id="@+id/roomHeadcount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="인원"
-        android:textSize="15dp"
-        android:textColor="#00a7f5"/>
+        android:textColor="#00a7f5"
+        android:textSize="15dp" />
+
+    <Button
+        android:id="@+id/DeleteButton"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:text="삭제" />
+
 </LinearLayout>
