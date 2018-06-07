@@ -36,6 +36,7 @@ public class CustomDialog extends Dialog implements View.OnClickListener{
 
     private Context context;
     private String room_id;
+    private String Result;
 
     private EditText editTitle;
     private EditText editArtist;
@@ -48,6 +49,7 @@ public class CustomDialog extends Dialog implements View.OnClickListener{
         super(context);
         this.context = context;
         this.room_id = room_id;
+        this.Result = "fail";
     }
 
     @Override
@@ -154,6 +156,7 @@ public class CustomDialog extends Dialog implements View.OnClickListener{
                                         .show();
                             }
                         }, 0);
+                        Result = "success";
                     } else {
                         Handler mHandler = new Handler(Looper.getMainLooper());
                         mHandler.postDelayed(new Runnable() {
@@ -192,12 +195,14 @@ public class CustomDialog extends Dialog implements View.OnClickListener{
             }
 
 
-            return "asfaflk";
+            return Result;
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            if(s.equals("success"))
+                CustomDialog.this.cancel();
         }
     }
 }

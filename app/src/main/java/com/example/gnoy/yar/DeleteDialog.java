@@ -49,11 +49,13 @@ public class DeleteDialog extends Dialog implements View.OnClickListener{
     private Button delete_cancel;
     private Button delete_request;
     private boolean RorS;
+    private String Result;
 
     public DeleteDialog(@NonNull Context context, String id, boolean RorS) {
         super(context);
         this.context = context;
         this.RorS = RorS;
+        this.Result = "fail";
         if(RorS) {
             this.room_id = id;
             this.url = "https://3jpiuxn3xl.execute-api.ap-northeast-2.amazonaws.com/yar/yar/room";
@@ -112,6 +114,7 @@ public class DeleteDialog extends Dialog implements View.OnClickListener{
         private String url;
         private ContentValues values;
 
+
         public NetworkTask(String url, ContentValues values) {
 
             this.url = url;
@@ -167,8 +170,10 @@ public class DeleteDialog extends Dialog implements View.OnClickListener{
                                         .setNegativeButton("확인", null)
                                         .create()
                                         .show();
+
                             }
                         }, 0);
+                        Result = "success";
                     } else {
                         Handler mHandler = new Handler(Looper.getMainLooper());
                         mHandler.postDelayed(new Runnable() {
@@ -206,14 +211,15 @@ public class DeleteDialog extends Dialog implements View.OnClickListener{
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
-
-            return "asfaflk";
+            return Result;
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            System.out.println(s);
+            if(s.equals("success"))
+                DeleteDialog.this.cancel();
         }
     }
 
