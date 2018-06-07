@@ -13,11 +13,23 @@
         android:id="@+id/selected_item_textview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.1"
+        android:layout_weight="0.15"
         android:background="#dadada"
         android:gravity="center_vertical"
         android:padding="10dip"
+        android:text="방 이름"
+        android:paddingBottom="0dip"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
+    <TextView
+        android:id="@+id/intro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#dadada"
+        android:gravity="center_vertical"
+        android:text="방 소개"
+        android:padding="10dip"
+        android:paddingTop="0dip" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"

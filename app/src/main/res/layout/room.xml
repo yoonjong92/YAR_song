@@ -18,18 +18,18 @@ padding은 내가 준듯. 하나의 list에서 어느 정도 여백을 주냐에
     android:paddingTop="10dp">
 
     <TextView
-        android:id="@+id/roomLocation"
+        android:id="@+id/roomName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="장소"
+        android:text="방 이름"
         android:textColor="#00a7f5"
         android:textSize="20dp" />
 
     <TextView
-        android:id="@+id/roomTitle"
+        android:id="@+id/roomIntro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="방 제목"
+        android:text="방 소개"
         android:textColor="#00a7f5"
         android:textSize="15dp" />
 

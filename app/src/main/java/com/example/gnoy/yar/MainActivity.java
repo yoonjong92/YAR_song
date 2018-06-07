@@ -43,16 +43,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         //방만들기
-        TextView registerButton = (TextView) findViewById(R.id.registerButton);
-
-        //setOnClickListener는 버튼 누르면 동작하고, intent로 실행하는 activity 바꿀 수 있는 듯.
-        registerButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                Intent registerIntent = new Intent(MainActivity.this, RegisterActivity.class);
-                MainActivity.this.startActivity(registerIntent);
-            }
-        });
+        Button registerButton = (Button) findViewById(R.id.registerButton);
+        registerButton.setOnClickListener(this);
 
         listView = (ListView) findViewById(R.id.listView);
         roomList = new ArrayList<Room>();
@@ -73,10 +65,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int i, long id){
                         Intent musiclistIntent = new Intent(MainActivity.this, MusicList.class);
-                        String loc = roomList.get(i).roomLocation;
+                        String loc = roomList.get(i).roomName;
+                        String intro = roomList.get(i).roomIntro;
                         String ID = roomList.get(i).roomID;
 
-                        musiclistIntent.putExtra("loc", loc);
+                        musiclistIntent.putExtra("name", loc);
+                        musiclistIntent.putExtra("intro", intro);
                         musiclistIntent.putExtra("ID", ID);
 
                         MainActivity.this.startActivity(musiclistIntent);
@@ -102,6 +96,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String position;
         int p;
         switch (view.getId()) {
+            case R.id.registerButton:
+                RegisterActivity createdialog = new RegisterActivity(this);
+                createdialog.show();
+                createdialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        MainActivity.NetworkTask networkTask = new MainActivity.NetworkTask(url, null);
+                        networkTask.execute();
+                    }
+                });
+                break;
             case R.id.deleteR_button:
                 oParentView = (View)view.getParent();
                 position = (String) oParentView.getTag();
@@ -143,10 +148,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             for (int i=0; i < ItemsArray.size(); i++){
                 JSONObject ItemObject = (JSONObject) ItemsArray.get(i);
-                String loc= "" + ItemObject.get("name");
+                String name= "" + ItemObject.get("name");
+                String message = "" + ItemObject.get("message");
                 String ID = "" + ItemObject.get("room_id");
 
-                Room tmpRoom = new Room(loc, "title", ID);
+                Room tmpRoom = new Room(name, message, ID);
                 tmpRoom.DeleteClickListener = MainActivity.this;
 
                 roomList.add(tmpRoom);

@@ -3,26 +3,26 @@ package com.example.gnoy.yar;
 import android.view.View;
 
 public class Room {
-    String roomLocation;
-    String roomTitle;
+    String roomName;
+    String roomIntro;
     String roomID;
 
     public View.OnClickListener DeleteClickListener;
 
-    public String getRoomLocation() {
-        return roomLocation;
+    public String getRoomName() {
+        return roomName;
     }
 
     public void setRoomLocation(String roomLocation) {
-        this.roomLocation = roomLocation;
+        this.roomName = roomName;
     }
 
-    public String getRoomTitle() {
-        return roomTitle;
+    public String getRoomIntro() {
+        return roomIntro;
     }
 
-    public void setRoomTitle(String roomTitle) {
-        this.roomTitle = roomTitle;
+    public void setRoomIntro(String roomIntro) {
+        this.roomIntro = roomIntro;
     }
 
     public String getRoomID() {
@@ -34,13 +34,13 @@ public class Room {
     }
 
     public Room(String roomLocation, String roomTitle) {
-        this.roomLocation = roomLocation;
-        this.roomTitle = roomTitle;
+        this.roomName = roomLocation;
+        this.roomIntro = roomTitle;
     }
 
-    public Room(String roomLocation, String roomTitle, String roomID) {
-        this.roomLocation = roomLocation;
-        this.roomTitle = roomTitle;
+    public Room(String roomName, String roomIntro, String roomID) {
+        this.roomName = roomName;
+        this.roomIntro = roomIntro;
         this.roomID = roomID;
     }
 }

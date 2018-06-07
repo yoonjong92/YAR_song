@@ -35,11 +35,11 @@ public class RoomListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View v = View.inflate(context, R.layout.room, null);
-        TextView roomLocation = (TextView) v.findViewById(R.id.roomLocation);
-        TextView roomTitle = (TextView) v.findViewById(R.id.roomTitle);
+        TextView roomName = (TextView) v.findViewById(R.id.roomName);
+        TextView roomIntro = (TextView) v.findViewById(R.id.roomIntro);
 
-        roomLocation.setText(roomList.get(position).getRoomLocation());
-        roomTitle.setText(roomList.get(position).getRoomTitle());
+        roomName.setText(roomList.get(position).getRoomName());
+        roomIntro.setText(roomList.get(position).getRoomIntro());
 
         Button deleteButton = (Button) v.findViewById(R.id.deleteR_button);
         deleteButton.setOnClickListener(roomList.get(position).DeleteClickListener);

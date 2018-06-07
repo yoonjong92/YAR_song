@@ -35,11 +35,14 @@ public class MusicList extends AppCompatActivity implements View.OnClickListener
 
         Intent refIntent = this.getIntent();
 
-        String loc = refIntent.getStringExtra("loc");
+        String name = refIntent.getStringExtra("name");
+        String intro = refIntent.getStringExtra("intro");
         ID = refIntent.getStringExtra("ID");
 
         TextView Room_Name = (TextView) findViewById(R.id.selected_item_textview);
-        Room_Name.setText(loc);
+        Room_Name.setText(name);
+        TextView Room_Intro = (TextView) findViewById(R.id.intro);
+        Room_Intro.setText(intro);
 
         mlistview = (ListView)findViewById(R.id.listview);
 
