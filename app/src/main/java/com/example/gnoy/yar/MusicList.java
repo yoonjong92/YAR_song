@@ -96,7 +96,7 @@ public class MusicList extends AppCompatActivity implements View.OnClickListener
                 position = (String) oParentView.getTag();
                 p = Integer.parseInt(position);
                 String id = list.get(p).getId();
-                DeleteDialog dialogD = new DeleteDialog(this, ID, false);
+                DeleteDialog dialogD = new DeleteDialog(this, id, false);
                 dialogD.show();
                 dialogD.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
@@ -132,7 +132,7 @@ public class MusicList extends AppCompatActivity implements View.OnClickListener
             for (int i=0; i < ItemsArray.size(); i++){
                 JSONObject ItemObject = (JSONObject) ItemsArray.get(i);
                 String title= "" + ItemObject.get("name");
-                String ID = "" + ItemObject.get("ID");
+                String ID = "" + ItemObject.get("song_id");
                 String artist = "" + ItemObject.get("artist");
                 String message = "" + ItemObject.get("message");
                 MusicDto music = new MusicDto();
