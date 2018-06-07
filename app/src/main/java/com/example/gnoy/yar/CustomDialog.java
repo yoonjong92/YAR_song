@@ -84,7 +84,7 @@ public class CustomDialog extends Dialog implements View.OnClickListener{
                 values.put("room_id", room_id);
                 values.put("artist",editArtist.getText().toString());
                 values.put("message",editMessage.getText().toString());
-                values.put("timestamp",Long.toString(System.currentTimeMillis()));
+                values.put("timestamp",Long.toString(System.currentTimeMillis()/1000));
                 CustomDialog.NetworkTask networkTask = new CustomDialog.NetworkTask(url, values);
                 networkTask.execute();
                 break;

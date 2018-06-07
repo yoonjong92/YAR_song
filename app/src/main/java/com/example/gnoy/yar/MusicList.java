@@ -18,6 +18,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class MusicList extends AppCompatActivity implements View.OnClickListener{
 
@@ -138,16 +139,28 @@ public class MusicList extends AppCompatActivity implements View.OnClickListener
                 String ID = "" + ItemObject.get("song_id");
                 String artist = "" + ItemObject.get("artist");
                 String message = "" + ItemObject.get("message");
+                String timeStamp = "" + ItemObject.get("timestamp");
+                System.out.println(timeStamp);
+                Double tmp = Double.parseDouble(timeStamp);
+                long time = Math.round(tmp);
                 MusicDto music = new MusicDto();
                 music.setId(ID);
                 music.setTitle(title);
                 music.setArtist(artist);
                 music.setMessage(message);
+                music.setTime(time);
                 music.MessageClickListener = MusicList.this;
                 music.DeleteClickListener = MusicList.this;
-
                 list.add(music);
             }
+
+            list.sort(new Comparator<MusicDto>() {
+                @Override
+                public int compare(MusicDto o1, MusicDto o2) {
+                    if (o1.getTime() < o2.getTime()) return 1;
+                    return 0;
+                }
+            });
 
             return "asfaflk";
         }

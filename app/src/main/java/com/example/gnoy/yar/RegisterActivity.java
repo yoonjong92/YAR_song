@@ -79,7 +79,7 @@ public class RegisterActivity extends Dialog implements View.OnClickListener{
                 values.put("roomTitle",nameText.getText().toString());
                 values.put("roomMessage",messageText.getText().toString());
                 values.put("roomPassword",passwordText.getText().toString());
-                values.put("timestamp",Long.toString(System.currentTimeMillis()));
+                values.put("timestamp",Long.toString(System.currentTimeMillis()/1000));
                 RegisterActivity.NetworkTask networkTask = new RegisterActivity.NetworkTask(url, values);
                 networkTask.execute();
                 break;

@@ -9,6 +9,7 @@ public class MusicDto implements Serializable {
     private String title;
     private String artist;
     private String message;
+    private long timestamp;
 
     public View.OnClickListener MessageClickListener;
     public View.OnClickListener DeleteClickListener;
@@ -53,5 +54,13 @@ public class MusicDto implements Serializable {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public long getTime() {
+        return timestamp;
+    }
+
+    public void setTime(long time) {
+        this.timestamp = time;
     }
 }
