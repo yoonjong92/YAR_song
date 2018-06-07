@@ -157,8 +157,9 @@ public class MusicList extends AppCompatActivity implements View.OnClickListener
             list.sort(new Comparator<MusicDto>() {
                 @Override
                 public int compare(MusicDto o1, MusicDto o2) {
-                    if (o1.getTime() < o2.getTime()) return 1;
-                    return 0;
+                    if (o1.getTime() < o2.getTime()) return -1;
+                    else if(o1.getTime() == o2.getTime()) return 0;
+                    else return 1;
                 }
             });
 
